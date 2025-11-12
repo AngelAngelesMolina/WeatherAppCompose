@@ -1,4 +1,4 @@
-package com.jaamcoding.myapplication.ui.theme
+package com.jaamcoding.myapplication.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

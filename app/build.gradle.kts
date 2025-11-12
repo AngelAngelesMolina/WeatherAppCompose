@@ -63,6 +63,24 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
+    // Location services
+    implementation(libs.play.services.location)
+    implementation(libs.accompanist.permissions)
 
+    // --- Retrofit + Moshi ---
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
 
+    // --- OkHttp ---
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+
+}
+kapt {
+    correctErrorTypes = true
+    arguments {
+        arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
+    }
 }
