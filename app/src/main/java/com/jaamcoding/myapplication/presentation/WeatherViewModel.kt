@@ -21,6 +21,31 @@ class WeatherViewModel @Inject constructor(
     var state by mutableStateOf(WeatherState())
         private set
 
+    fun loadWeatherDefault(){
+        viewModelScope.launch {
+            state = state.copy(
+                isLoading = true,
+                error = null
+            )
+            when(val result = repository.getWeatherData(lat = null, long = null, query = "London")) {
+                is Resource.Success -> {
+                    state = state.copy(
+                        weatherInfo = result.data,
+                        isLoading = false,
+                        error = null
+                    )
+                }
+                is Resource.Error -> {
+                    state = state.copy(
+                        weatherInfo = null,
+                        isLoading = false,
+                        error = result.message
+                    )
+                }
+            }
+        }
+    }
+
     fun loadWeatherInfo() {
         viewModelScope.launch {
             state = state.copy(
@@ -28,7 +53,7 @@ class WeatherViewModel @Inject constructor(
                 error = null
             )
             locationTracker.getCurrentLocation()?.let { location ->
-                when(val result = repository.getWeatherData(location.latitude, location.longitude)) {
+                when(val result = repository.getWeatherData(location.latitude, location.longitude, query = "London")) {
                     is Resource.Success -> {
                         state = state.copy(
                             weatherInfo = result.data,

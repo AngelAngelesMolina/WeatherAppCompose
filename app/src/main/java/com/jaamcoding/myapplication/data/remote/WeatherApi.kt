@@ -1,5 +1,6 @@
 package com.jaamcoding.myapplication.data.remote
 
+import com.jaamcoding.myapplication.data.remote.weather.WeatherResponse
 import com.jaamcoding.myapplication.domain.common.ApiConstants
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,5 +14,5 @@ interface WeatherApi {
         @Query("units") units: String?,
         @Query("latitude") lat: Double? = null,
         @Query("longitude") long: Double? = null
-    ): WeatherDto
+    ): WeatherResponse
 }
