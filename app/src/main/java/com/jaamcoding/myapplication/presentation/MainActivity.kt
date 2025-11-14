@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,7 +47,11 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize().background(DarkBlue)) { innerPadding ->
                     Column(modifier = Modifier.fillMaxWidth().padding(innerPadding)) {
                         WeatherCard(state = vm.state, backgroundColor = DeepBlue)
+                        Button(onClick = { vm.loadWeatherInfo() }) {
+                            Text(text = "Refresh")
+                        }
                     }
+                    /*bf2ee22b237a7ae7ee0e594b079e228f*/
 //                    Greeting(
 //                        name = "Android",
 //                        modifier = Modifier.padding(innerPadding)

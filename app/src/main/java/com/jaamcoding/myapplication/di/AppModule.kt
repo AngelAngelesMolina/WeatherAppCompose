@@ -4,6 +4,7 @@ import android.app.Application
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.jaamcoding.myapplication.data.remote.WeatherApi
+import com.jaamcoding.myapplication.domain.common.ApiConstants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,10 +22,12 @@ object AppModule {
     @Singleton
     fun provideWeatherApi(): WeatherApi {
         return Retrofit.Builder()
-            .baseUrl("https://api.open-meteo.com/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
+//            .addConverterFactory(MoshiConverterFactory.create())
+//            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create()
+            .create(WeatherApi::class.java)
     }
 
     @Provides
