@@ -35,7 +35,7 @@ fun WeatherCard(
     backgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
-    state.weatherInfo?.currentWeatherData?.let { data ->
+    /*state.weatherInfo?.currentWeatherData?.let { data ->
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = backgroundColor
@@ -105,7 +105,7 @@ fun WeatherCard(
                 }
             }
         }
-    }
+    }*/
 }
 
 

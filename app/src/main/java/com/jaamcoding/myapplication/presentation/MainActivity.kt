@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
         permissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) {
-            vm.loadWeatherInfo()
+            //vm.loadWeatherInfo()
         }
         permissionLauncher.launch(
             arrayOf(
