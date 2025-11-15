@@ -9,7 +9,7 @@ interface WeatherApi {
     //    @GET("v1/forecast?hourly=temperature_2m,weathercode,relativehumidity_2m,windspeed_10m,pressure_msl")
     @GET("weather")
     suspend fun getWeatherData(
-        @Query("q") query: String,
+        @Query("q") query: String?=null,
         @Query("appid") apiKey: String = ApiConstants.APIKEY,
         @Query("units") units: String?,
         @Query("latitude") lat: Double? = null,

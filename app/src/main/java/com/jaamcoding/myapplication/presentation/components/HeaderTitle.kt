@@ -3,7 +3,6 @@ package com.jaamcoding.myapplication.presentation.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,7 +20,7 @@ import com.jaamcoding.myapplication.R
 
 @Composable
 fun HeaderTitle(
-    city: String,
+    city: String?,
     date: String,
     hour: String,
     modifier: Modifier = Modifier,
@@ -30,7 +29,7 @@ fun HeaderTitle(
         .fillMaxWidth()
         .padding(8.dp)) {
         Row(modifier = Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically) {
-            Text(text = city, fontSize = 18.sp)
+            Text(text = city?: "City", fontSize = 18.sp)
             Icon(
                 painter = painterResource(R.drawable.outline_arrow_outward),
                 contentDescription = "Icon row", modifier = Modifier.size(20.dp)

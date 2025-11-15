@@ -22,7 +22,7 @@ class WeatherRepositoryImpl @Inject constructor(
                 data = api.getWeatherData(
                     lat = lat,
                     long = long,
-                    query = "London",
+                    query = query,
                     units = "metric"
                 )
             )

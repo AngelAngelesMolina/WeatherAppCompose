@@ -5,5 +5,5 @@ import com.jaamcoding.myapplication.domain.util.Resource
 import com.jaamcoding.myapplication.domain.weather.WeatherInfo
 
 interface WeatherRepository {
-    suspend fun getWeatherData(lat: Double?, long: Double?, query : String): Resource<WeatherResponse>
+    suspend fun getWeatherData(lat: Double?, long: Double?, query:String): Resource<WeatherResponse>
 }
