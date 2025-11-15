@@ -8,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -50,10 +49,12 @@ class MainActivity : ComponentActivity() {
                     containerColor = Color.Transparent,
                 ) { inner ->
                     WeatherScreen(
-                        Modifier
-                            .fillMaxSize()
-                            .padding(inner)
-                            .windowInsetsPadding(WindowInsets.safeDrawing) // respeta notch, status, nav
+                        onRefreshClick = { vm.loadWeatherInfo() },
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(inner)
+                                .windowInsetsPadding(WindowInsets.safeDrawing) // respeta notch, status, nav,
                     )
                 }
             }

@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jaamcoding.myapplication.data.mappers.toWeatherInfo
 import com.jaamcoding.myapplication.domain.location.LocationTracker
 import com.jaamcoding.myapplication.domain.repository.WeatherRepository
 import com.jaamcoding.myapplication.domain.util.Resource
@@ -16,35 +17,37 @@ import javax.inject.Inject
 class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository,
     private val locationTracker: LocationTracker
-): ViewModel() {
+) : ViewModel() {
 
     var state by mutableStateOf(WeatherState())
         private set
 
-    fun loadWeatherDefault(){
-        viewModelScope.launch {
-            state = state.copy(
-                isLoading = true,
-                error = null
-            )
-            when(val result = repository.getWeatherData(lat = null, long = null, query = "London")) {
-                is Resource.Success -> {
-                    state = state.copy(
-                        weatherInfo = result.data,
-                        isLoading = false,
-                        error = null
-                    )
-                }
-                is Resource.Error -> {
-                    state = state.copy(
-                        weatherInfo = null,
-                        isLoading = false,
-                        error = result.message
-                    )
-                }
-            }
-        }
-    }
+//    fun loadWeatherDefault() {
+//        viewModelScope.launch {
+//            state = state.copy(
+//                isLoading = true,
+//                error = null
+//            )
+//            when (val result =
+//                repository.getWeatherData(lat = null, long = null, query = "Mexico city")) {
+//                is Resource.Success -> {
+//                    state = state.copy(
+//                        weatherInfo = result.data?.toWeatherInfo(),
+//                        isLoading = false,
+//                        error = null
+//                    )
+//                }
+//
+//                is Resource.Error -> {
+//                    state = state.copy(
+//                        weatherInfo = null,
+//                        isLoading = false,
+//                        error = result.message
+//                    )
+//                }
+//            }
+//        }
+//    }
 
     fun loadWeatherInfo() {
         viewModelScope.launch {
@@ -53,14 +56,19 @@ class WeatherViewModel @Inject constructor(
                 error = null
             )
             locationTracker.getCurrentLocation()?.let { location ->
-                when(val result = repository.getWeatherData(location.latitude, location.longitude, query = "London")) {
+                when (val result = repository.getWeatherData(
+                    location.latitude,
+                    location.longitude,
+                    query = "Mexico city"
+                )) {
                     is Resource.Success -> {
                         state = state.copy(
-                            weatherInfo = result.data,
+                            weatherInfo = result.data?.toWeatherInfo(),
                             isLoading = false,
                             error = null
                         )
                     }
+
                     is Resource.Error -> {
                         state = state.copy(
                             weatherInfo = null,

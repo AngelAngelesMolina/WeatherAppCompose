@@ -2,6 +2,7 @@ package com.jaamcoding.myapplication.data.mappers
 
 import com.jaamcoding.myapplication.data.remote.WeatherDataDto
 import com.jaamcoding.myapplication.data.remote.WeatherDto
+import com.jaamcoding.myapplication.data.remote.weather.WeatherResponse
 import com.jaamcoding.myapplication.domain.weather.WeatherData
 import com.jaamcoding.myapplication.domain.weather.WeatherInfo
 import com.jaamcoding.myapplication.domain.weather.WeatherType
@@ -13,40 +14,52 @@ private data class IndexedWeatherData(
     val data: WeatherData
 )
 
-fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
-    return time.mapIndexed { index, time ->
-        val temperature = temperatures[index]
-        val weatherCode = weatherCodes[index]
-        val windSpeed = windSpeeds[index]
-        val pressure = pressures[index]
-        val humidity = humidities[index]
-        IndexedWeatherData(
-            index = index,
-            data = WeatherData(
-                time = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME),
-                temperatureCelsius = temperature,
-                pressure = pressure,
-                windSpeed = windSpeed,
-                humidity = humidity,
-                weatherType = WeatherType.fromWMO(weatherCode)
-            )
-        )
-    }.groupBy {
-        it.index / 24
-    }.mapValues {
-        it.value.map { it.data }
-    }
-}
+//fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
+//    return time.mapIndexed { index, time ->
+//        val temperature = temperatures[index]
+//        val weatherCode = weatherCodes[index]
+//        val windSpeed = windSpeeds[index]
+//        val pressure = pressures[index]
+//        val humidity = humidities[index]
+//        IndexedWeatherData(
+//            index = index,
+//            data = WeatherData(
+//                time = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME),
+//                temperatureCelsius = temperature,
+//                pressure = pressure,
+//                windSpeed = windSpeed,
+//                humidity = humidity,
+//                weatherType = WeatherType.fromWMO(weatherCode)
+//            )
+//        )
+//    }.groupBy {
+//        it.index / 24
+//    }.mapValues {
+//        it.value.map { it.data }
+//    }
+//}
 
-fun WeatherDto.toWeatherInfo(): WeatherInfo {
-    val weatherDataMap = weatherData.toWeatherDataMap()
-    val now = LocalDateTime.now()
-    val currentWeatherData = weatherDataMap[0]?.find {
-        val hour = if(now.minute < 30) now.hour else now.hour + 1
-        it.time.hour == hour
-    }
-    return WeatherInfo(
-        weatherDataPerDay = weatherDataMap,
-        currentWeatherData = currentWeatherData
+fun WeatherResponse.toWeatherInfo(): WeatherData {
+    return WeatherData(
+        time =dt,
+        name = name, 
+        temperatureCelsius = main.temp,
+        pressure = main.pressure,
+        windSpeed = wind.speed,
+        humidity = main.humidity,
+        weatherType = WeatherType.fromDescription(weather[0].description)
     )
 }
+
+//fun WeatherDto.toWeatherInfo(): WeatherInfo {
+//    val weatherDataMap = weatherData.toWeatherDataMap()
+//    val now = LocalDateTime.now()
+//    val currentWeatherData = weatherDataMap[0]?.find {
+//        val hour = if(now.minute < 30) now.hour else now.hour + 1
+//        it.time.hour == hour
+//    }
+//    return WeatherInfo(
+//        weatherDataPerDay = weatherDataMap,
+//        currentWeatherData = currentWeatherData
+//    )
+//}
